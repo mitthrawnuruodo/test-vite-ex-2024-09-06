@@ -1,6 +1,8 @@
 // components/Header.js
-export function Header() {
+export function createHeader() {
     const header = document.createElement('header');
-    header.innerHTML = `<h1>Country and Weather App</h1>`;
+    const h1 = document.createElement('h1');
+    h1.textContent = 'Countries & Weather';
+    header.appendChild(h1);
     return header;
-  }
+}

@@ -1,6 +1,6 @@
 // components/Footer.js
-export function Footer() {
+export function createFooter() {
     const footer = document.createElement('footer');
-    footer.innerHTML = `<p>SPA using vanilla JS, APIs, and Vite.</p>`;
+    footer.textContent = '© 2024 Weather App by Your Name';
     return footer;
-  }
+}
