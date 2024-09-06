@@ -283,6 +283,6 @@ Using the App:
 1. Make the weather appear inline and not in an alert.
     * And display the weather forcast better (maybe with icons?)
 1. List all countries and add a search field to find/filter the list.
-1. Style the app with basic CSS (aka make it look better).
+1. Style the app with basic CSS (aka make it look better), and display the flag for each country.
 
 Tip: Make branches for each improvement, and merge back into main when it works.
