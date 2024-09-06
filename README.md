@@ -2,7 +2,7 @@
 
 ## Goal:
 
-Create a Single Page Application (SPA) that fetches and displays data from two different APIs. Use Vite as the bundler, organize the project using JavaScript modules, and apply optional improvements (error handling, environment variables, and styling).
+Create a Single Page Application (SPA) that fetches and displays data from two different APIs. Use Vite as the bundler, organize the project using JavaScript modules, and then apply  improvements.
 
 ## Prerequisites:
 
