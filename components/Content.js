@@ -8,7 +8,7 @@ export async function createContent() {
   
     // Fetch and display country data
     const countries = await fetchCountries();
-    console.log(countries);
+    //console.log(countries);
     const countryList = document.createElement('ul');
     
     countries.slice(0, 10).forEach((country) => {
