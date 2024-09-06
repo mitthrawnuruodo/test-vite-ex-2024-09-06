@@ -32,11 +32,11 @@ After setting up the project with Vite, update the project structure as follows:
 ├── style.css
 ├── api
 │   ├── countries.js
-│   ├── weather.js
+│   └── weather.js
 ├── components
 │   ├── Header.js
 │   ├── Content.js
-│   ├── Footer.js
+│   └── Footer.js
 ├── package.json
 ├── vite.config.js
 └── README.md
@@ -242,6 +242,7 @@ Ensure that your `index.html` includes the stylesheet and the main script:
     <link rel="stylesheet" href="./style.css">
   </head>
   <body>
+    <div id="app"></div> <!-- Container for dynamically generated content -->
     <script type="module" src="./main.js"></script>
   </body>
 </html>
@@ -260,7 +261,7 @@ export default defineConfig({
 });
 ```
 
-Not making any configurations, yet. But note that if `vite.config.js` exists, it cannot be empty.
+Not making any configurations, yet. But if `vite.config.js` exists, it cannot be empty.
 
 Start the development server with:
 
@@ -280,7 +281,7 @@ Using the App:
     * *Optional*: add and configure `@vitejs/plugin-legacy` and `vite-plugin-pwa`
 1. Make the weather appear inline and not in an alert.
     * And display the weather forcast better (maybe with icons)
-1. List all countries and add a search field to find/filter the list.
+1. List all countries (not just the first 10) and add a search field to find/filter the list.
 1. Style the app with basic CSS (aka make it look better), and display the flag for each country.
 1. Add [JSDocs](https://jsdoc.app/about-getting-started) for all relevant JS code.
 
