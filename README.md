@@ -112,7 +112,7 @@ export async function createContent() {
   
     // Fetch and display country data
     const countries = await fetchCountries();
-    console.log(countries);
+    //console.log(countries);
     const countryList = document.createElement('ul');
     
     countries.slice(0, 10).forEach((country) => {
@@ -275,14 +275,13 @@ Using the App:
 * View Weather: Click on a country to view the current weather in its capital city. 
 
 ## Improvements:
-1. Make sure your default browser opens every time.
-1. Add better error handling for API requests.
-1. Add JSDocs for all relevant code.
+1. Make sure your default browser opens every time you run the app with `npm run dev`.
 1. Add and configure `eslint` (or `vite-plugin-eslint`) to the project
-    * Optional add and configure `@vitejs/plugin-legacy` and `vite-plugin-pwa`
+    * *Optional*: add and configure `@vitejs/plugin-legacy` and `vite-plugin-pwa`
 1. Make the weather appear inline and not in an alert.
-    * And display the weather forcast better (maybe with icons?)
+    * And display the weather forcast better (maybe with icons)
 1. List all countries and add a search field to find/filter the list.
 1. Style the app with basic CSS (aka make it look better), and display the flag for each country.
+1. Add [JSDocs](https://jsdoc.app/about-getting-started) for all relevant JS code.
 
-Tip: Make branches for each improvement, and merge back into main when it works.
+**Tip**: Make new branches for each improvement, and merge back into `main` when it works.
