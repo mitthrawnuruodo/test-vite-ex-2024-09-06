@@ -27,20 +27,18 @@ npm install
 After setting up the project with Vite, update the project structure as follows:
 
 ```css
-Copy code
 ├── index.html
 ├── main.js
 ├── style.css
 ├── api
-│   ├── api1.js
-│   ├── api2.js
+│   ├── countries.js
+│   ├── weather.js
 ├── components
 │   ├── Header.js
 │   ├── Content.js
 │   ├── Footer.js
 ├── package.json
 ├── vite.config.js
-├── .env (optional)
 └── README.md
 ```
 
@@ -50,11 +48,11 @@ We'll use the following APIs:
 1. [REST Countries API](https://restcountries.com/): To fetch data about countries.
 2. [Open-Meteo API](https://open-meteo.com/): To fetch weather data based on geographical coordinates.
 
-API 1: Fetching Country Data (`api/api1.js`)
+API 1: Fetching Country Data (`api/countries.js`)
 
 ```javascript
-// api/api1.js
-export async function getCountries() {
+// api/countries.js
+export async function fetchCountries() {
   try {
     const response = await fetch('https://restcountries.com/v3.1/all');
     if (!response.ok) throw new Error('Failed to fetch country data');
@@ -67,12 +65,11 @@ export async function getCountries() {
 }
 ```
 
-API 2: Fetching Weather Data (`api/api2.js`)
+API 2: Fetching Weather Data (`api/weather.js`)
 
 ```javascript
-// api/api2.js
-
-export async function getWeather(latitude, longitude) {
+// api/weather.js
+export async function fetchWeather(latitude, longitude) {
   try {
     const response = await fetch(
       `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true`
@@ -93,10 +90,12 @@ Header Component (`components/Header.js`)
 
 ```javascript
 // components/Header.js
-export function Header() {
-  const header = document.createElement('header');
-  header.innerHTML = `<h1>Country and Weather App</h1>`;
-  return header;
+export function createHeader() {
+    const header = document.createElement('header');
+    const h1 = document.createElement('h1');
+    h1.textContent = 'Countries & Weather';
+    header.appendChild(h1);
+    return header;
 }
 ```
 
@@ -104,52 +103,53 @@ Content Component (`components/Content.js`)
 
 ```javascript
 // components/Content.js
-import { getCountries } from '../api/api1.js';
-import { getWeather } from '../api/api2.js';
+import { fetchCountries } from '../api/countries.js';
+import { fetchWeather } from '../api/weather.js';
 
-export async function Content() {
-  const content = document.createElement('div');
-  content.classList.add('content');
-
-  // Fetch countries and display
-  const countries = await getCountries();
-  const countryList = document.createElement('ul');
-
-  // Display first 10 countries for brevity
-  countries.slice(0, 10).forEach((country) => {
-    const li = document.createElement('li');
-    li.textContent = country.name.common;
-
-    li.addEventListener('click', async () => {
-      if (country.capitalInfo && country.capitalInfo.latlng) {
-        const [lat, lon] = country.capitalInfo.latlng;
-        const weather = await getWeather(lat, lon);
-        alert(
-          `Weather in ${country.capital ? country.capital[0] : 'Capital'}: ${
-            weather.current_weather.temperature
-          }°C, Code: ${weather.current_weather.weathercode}`
-        );
-      } else {
-        alert('Weather data not available for this country.');
-      }
+export async function createContent() {
+    const content = document.createElement('main');
+    content.classList.add('content');
+  
+    // Fetch and display country data
+    const countries = await fetchCountries();
+    console.log(countries);
+    const countryList = document.createElement('ul');
+    
+    countries.slice(0, 10).forEach((country) => {
+      const li = document.createElement('li');
+      li.textContent = country.name.common;
+      
+      // Event listener to fetch weather when country is clicked
+      li.addEventListener('click', async () => {
+        if (country.capitalInfo && country.capitalInfo.latlng) {
+          const [lat, lon] = country.capitalInfo.latlng;
+          const weather = await fetchWeather(lat, lon);
+          alert(
+            `Weather in ${country.capital ? country.capital[0] : 'Capital'}: ${
+              weather.current_weather.temperature
+            }°C, Code: ${weather.current_weather.weathercode}`
+          );
+        } else {
+          alert('Weather data not available for this country.');
+        }
+      });
+  
+      countryList.appendChild(li);
     });
-
-    countryList.appendChild(li);
-  });
-
-  content.appendChild(countryList);
-  return content;
-}
+  
+    content.appendChild(countryList);
+    return content;
+  }
 ```
 
 Footer Component (`components/Footer.js`)
 
 ```javascript
 // components/Footer.js
-export function Footer() {
-  const footer = document.createElement('footer');
-  footer.innerHTML = `<p>SPA using vanilla JS, APIs, and Vite.</p>`;
-  return footer;
+export function createFooter() {
+    const footer = document.createElement('footer');
+    footer.textContent = '© 2024 Weather App by Your Name';
+    return footer;
 }
 ```
 
@@ -157,18 +157,25 @@ export function Footer() {
 
 ```javascript
 // main.js
-import './style.css';
-import { Header } from './components/Header.js';
-import { Content } from './components/Content.js';
-import { Footer } from './components/Footer.js';
+import { createHeader } from './components/Header.js';
+import { createContent } from './components/Content.js';
+import { createFooter } from './components/Footer.js';
 
-async function initializeApp() {
-  document.body.appendChild(Header());
-  document.body.appendChild(await Content());
-  document.body.appendChild(Footer());
-}
+document.addEventListener('DOMContentLoaded', async () => {
+    const app = document.getElementById('app');
 
-initializeApp();
+    // Add header
+    const header = createHeader();
+    app.appendChild(header);
+
+    // Add main content (list of countries and weather info)
+    const content = await createContent();
+    app.appendChild(content);
+
+    // Add footer
+    const footer = createFooter();
+    app.appendChild(footer);
+});
 ```
 
 ## Step 6: Add Styling (`style.css`)
@@ -182,7 +189,7 @@ body {
 
 header {
   background-color: #282c34;
-  color: white;
+  color: #fafafa;
   text-align: center;
   padding: 1rem;
 }
@@ -253,7 +260,7 @@ export default defineConfig({
 });
 ```
 
-Not setting anything, yet. But note that if `vite.config.js` exists, it cannot be empty.
+Not making any configurations, yet. But note that if `vite.config.js` exists, it cannot be empty.
 
 Start the development server with:
 
@@ -262,3 +269,20 @@ npm run dev
 ```
 
 Navigate to the URL provided in the terminal (typically http://localhost:5173) to view your SPA. You should see a list of countries, and clicking on a country will display an alert with the current weather in its capital city.
+
+Using the App:
+* View Countries: A list of the first 10 countries is displayed.
+* View Weather: Click on a country to view the current weather in its capital city. 
+
+## Improvements:
+1. Make sure your default browser opens every time.
+1. Add better error handling for API requests.
+1. Add JSDocs for all relevant code.
+1. Add and configure `eslint` (or `vite-plugin-eslint`) to the project
+    * Optional add and configure `@vitejs/plugin-legacy` and `vite-plugin-pwa`
+1. Make the weather appear inline and not in an alert.
+    * And display the weather forcast better (maybe with icons?)
+1. List all countries and add a search field to find/filter the list.
+1. Style the app with basic CSS (aka make it look better).
+
+Tip: Make branches for each improvement, and merge back into main when it works.

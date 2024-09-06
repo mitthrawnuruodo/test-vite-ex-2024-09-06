@@ -1,13 +1,20 @@
 // main.js
-import './style.css';
-import { Header } from './components/Header.js';
-import { Content } from './components/Content.js';
-import { Footer } from './components/Footer.js';
+import { createHeader } from './components/Header.js';
+import { createContent } from './components/Content.js';
+import { createFooter } from './components/Footer.js';
 
-async function initializeApp() {
-  document.body.appendChild(Header());
-  document.body.appendChild(await Content());
-  document.body.appendChild(Footer());
-}
+document.addEventListener('DOMContentLoaded', async () => {
+    const app = document.getElementById('app');
 
-initializeApp();
+    // Add header
+    const header = createHeader();
+    app.appendChild(header);
+
+    // Add main content (list of countries and weather info)
+    const content = await createContent();
+    app.appendChild(content);
+
+    // Add footer
+    const footer = createFooter();
+    app.appendChild(footer);
+});
