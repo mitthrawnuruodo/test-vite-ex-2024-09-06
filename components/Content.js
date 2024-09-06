@@ -11,7 +11,7 @@ export async function createContent() {
     //console.log(countries);
     const countryList = document.createElement('ul');
     
-    countries.slice(0, 10).forEach((country) => {
+    countries.slice(175, 185).forEach((country) => {
       const li = document.createElement('li');
       li.textContent = country.name.common;
       
