@@ -26,7 +26,7 @@ npm install
 ## Step 2: Project Structure
 After setting up the project with Vite, update the project structure as follows:
 
-```css
+```bash
 ├── index.html
 ├── main.js
 ├── style.css
@@ -115,7 +115,7 @@ export async function createContent() {
     //console.log(countries);
     const countryList = document.createElement('ul');
     
-    countries.slice(0, 10).forEach((country) => {
+    countries.slice(175, 185).forEach((country) => {
       const li = document.createElement('li');
       li.textContent = country.name.common;
       
@@ -270,10 +270,6 @@ npm run dev
 ```
 
 Navigate to the URL provided in the terminal (typically http://localhost:5173) to view your SPA. You should see a list of countries, and clicking on a country will display an alert with the current weather in its capital city.
-
-Using the App:
-* View Countries: A list of the first 10 countries is displayed.
-* View Weather: Click on a country to view the current weather in its capital city. 
 
 ## Improvements:
 1. Make sure your default browser opens every time you run the app with `npm run dev`.
