@@ -10,8 +10,9 @@ export async function createContent() {
     const countries = await fetchCountries();
     //console.log(countries);
     const countryList = document.createElement('ul');
-    
-    countries.slice(175, 185).forEach((country) => {
+    countries.sort((a, b)=>a.name.common.localeCompare(b.name.common));
+
+    countries.forEach((country) => {
       const li = document.createElement('li');
       li.textContent = country.name.common;
       
